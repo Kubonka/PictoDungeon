@@ -9,7 +9,8 @@ import Button from "./Button";
 
 class GameManager {
   #tickerId;
-  #matrixSize = 6;
+  //!   V V V  SETEAR BOARD SIZE ACA  V V V
+  #matrixSize = 8;
   static #instance = null;
   constructor() {
     if (GameManager.#instance) {
@@ -62,6 +63,8 @@ class GameManager {
       }
       case GameState.Level1: {
         this.msgText.text = "SOLVED !";
+        const monsters = this.board.filter((tile) => tile.target === "monster");
+        monsters.forEach((tile) => tile.play("monster"));
         setTimeout(() => (this.msgText.text = ""), 4000);
         this.state = GameState.Loading;
         break;

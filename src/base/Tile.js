@@ -43,6 +43,8 @@ class Tile {
       );
       sprite.eventMode = "dynamic";
       sprite.position.copyFrom(this.#spritePosition);
+      sprite.animationSpeed = 0.4;
+      sprite.loop = false;
       sprite.anchor.set(0.5, 0.5);
       sprite.scale.set(this.#scale, this.#scale);
       sprite.on("click", (event) => {
@@ -71,6 +73,7 @@ class Tile {
         case "floor": {
           this.animatedSprites.cross.visible = true;
           this.current = "cross";
+          this.play("cross");
           //play
           break;
         }
@@ -78,12 +81,14 @@ class Tile {
           this.animatedSprites.floor.visible = true;
           this.animatedSprites.wall.visible = false;
           this.animatedSprites.cross.visible = true;
+          this.play("cross");
           this.current = "cross";
           break;
         case "cross":
           //set floor
           this.animatedSprites.floor.visible = true;
           this.animatedSprites.cross.visible = false;
+          this.animatedSprites.cross.gotoAndStop(0);
           this.current = "floor";
           break;
         default:
@@ -94,6 +99,7 @@ class Tile {
         case "floor": {
           this.animatedSprites.wall.visible = true;
           this.animatedSprites.cross.visible = false;
+          this.animatedSprites.cross.gotoAndStop(0);
           this.current = "wall";
           //play
           break;
@@ -102,6 +108,7 @@ class Tile {
           this.animatedSprites.floor.visible = true;
           this.animatedSprites.wall.visible = false;
           this.animatedSprites.cross.visible = false;
+          this.animatedSprites.cross.gotoAndStop(0);
           this.current = "floor";
           break;
         case "cross":
@@ -109,6 +116,7 @@ class Tile {
           this.animatedSprites.wall.visible = true;
           this.animatedSprites.floor.visible = false;
           this.animatedSprites.cross.visible = false;
+          this.animatedSprites.cross.gotoAndStop(0);
           this.current = "wall";
           break;
         default:
@@ -116,6 +124,9 @@ class Tile {
       }
     }
     this.#onClickHandler();
+  }
+  play(spriteName) {
+    this.animatedSprites[spriteName].play();
   }
 
   //!test function
