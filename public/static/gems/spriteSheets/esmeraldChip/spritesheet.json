@@ -1,0 +1,135 @@
+{
+	"frames": {
+		"esmeraldChip0.png": {
+			"frame": {
+				"x": 1,
+				"y": 1,
+				"w": 267,
+				"h": 267
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 267,
+				"h": 267
+			},
+			"sourceSize": {
+				"w": 267,
+				"h": 267
+			}
+		},
+		"esmeraldChip1.png": {
+			"frame": {
+				"x": 270,
+				"y": 1,
+				"w": 267,
+				"h": 267
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 267,
+				"h": 267
+			},
+			"sourceSize": {
+				"w": 267,
+				"h": 267
+			}
+		},
+		"esmeraldChip2.png": {
+			"frame": {
+				"x": 1,
+				"y": 270,
+				"w": 267,
+				"h": 267
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 267,
+				"h": 267
+			},
+			"sourceSize": {
+				"w": 267,
+				"h": 267
+			}
+		},
+		"esmeraldChip3.png": {
+			"frame": {
+				"x": 270,
+				"y": 270,
+				"w": 267,
+				"h": 267
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 267,
+				"h": 267
+			},
+			"sourceSize": {
+				"w": 267,
+				"h": 267
+			}
+		},
+		"esmeraldChip4.png": {
+			"frame": {
+				"x": 539,
+				"y": 1,
+				"w": 267,
+				"h": 267
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 267,
+				"h": 267
+			},
+			"sourceSize": {
+				"w": 267,
+				"h": 267
+			}
+		},
+		"esmeraldChip5.png": {
+			"frame": {
+				"x": 539,
+				"y": 270,
+				"w": 267,
+				"h": 267
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 267,
+				"h": 267
+			},
+			"sourceSize": {
+				"w": 267,
+				"h": 267
+			}
+		}
+	},
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 807,
+			"h": 538
+		},
+		"scale": "1"
+	}
+}
