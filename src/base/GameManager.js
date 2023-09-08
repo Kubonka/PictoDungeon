@@ -89,7 +89,15 @@ class GameManager {
   }
   #onClickTile() {
     this.indicators.forEach((indicator) => indicator.update());
-    const notSolved = this.board.some((tile) => tile.current !== tile.target);
+    const notSolved = this.board.some((tile) => {
+      if (tile.current !== tile.target) {
+        if (tile.current === "cross" && tile.target === "floor") {
+          return false;
+        }
+        return true;
+      }
+      return false;
+    });
     if (!notSolved) {
       this.state = GameState.Level1;
     }
