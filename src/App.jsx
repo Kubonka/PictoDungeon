@@ -3,6 +3,7 @@ import GameState from "./helperClasses/GameState";
 import GameManager from "./base/GameManager";
 import Menu from "./Menu";
 import UI from "./UI";
+
 function App() {
   const main = useRef();
   const [menu, setMenu] = useState(false);

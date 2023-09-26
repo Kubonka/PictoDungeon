@@ -1,0 +1,170 @@
+const pictoMap = {
+      rows: [6, 2, 4, 3, 4, 4, 2, 6],
+      cols: [6, 2, 5, 3, 2, 5, 2, 6],
+      monstersPos: [
+        { i: 0, j: 2 },
+        { i: 0, j: 4 },
+        { i: 2, j: 7 },
+        { i: 3, j: 0 },
+        { i: 4, j: 7 },
+        { i: 5, j: 0 },
+        { i: 7, j: 3 },
+        { i: 7, j: 5 },
+      ],
+    };
+
+class Combinations {
+  constructor() {
+    this.combinations = {};
+    for (let index = 1; index < 8; index++) {
+      this.combinations[index] = this.#generateCombination(index);
+    }
+    console.log(this.combinations);
+  }
+  #generateCombination(val) {
+    let result = [];
+    const base = new Array(8).fill(0);
+    for (let i = 0; i < val; i++) {
+      base[i] = 1;
+    }
+    for (let i = 0; i < base.length; i++) {
+      result.push([...base]);
+      //?GENERAR VARIANTES
+      const variants = this.#createVariants([...base]);
+      result = [...result, ...variants];
+      //?SHIFT BASE
+      this.#shift(base);
+    }
+    //?ELIMINAR DUPLICADOS
+    this.#removeDuplicates(result);
+    return result;
+  }
+  #createVariants(arr) {
+    const result = [];
+    for (let i = 0; i < arr.length - 1; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (arr[i] !== arr[j]) {
+          const aux = arr[i];
+          arr[i] = arr[j];
+          arr[j] = aux;
+          result.push([...arr]);
+        }
+      }
+    }
+    return result;
+  }
+  #shift(arr) {
+    const aux = arr[arr.length - 1];
+    for (let i = arr.length - 1; i > 0; i--) {
+      arr[i] = arr[i - 1];
+    }
+    arr[0] = aux;
+  }
+  #removeDuplicates(arr) {
+    for (let i = 0; i < arr.length - 1; i++) {
+      for (let j = i + 1; j < arr.length; j++) {
+        if (this.#sameValues(arr[i], arr[j])) {
+          arr.splice(j, 1);
+          j--;
+        }
+      }
+    }
+  }
+  #sameValues(a, b) {
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return false;
+    }
+    return true;
+  }
+}
+export default Combinations;
+
+import cloneDeep from "lodash/cloneDeep";
+class Solver {
+  #tickers;
+  #progress = 0;
+  #bestSolution;
+  #allCombinationsDone = false;
+  /**
+   * @param {{rows:[number],cols:[number],monstersPos:[{i:number,j:number}]}} pictoMap
+   */
+  constructor(world, pictoMap, combinations) {
+    this.world = world;
+    this.map = pictoMap;
+    this.combinations = combinations;
+    /**
+     * @type {Array<{index: number, combinations: []}>}
+     */
+    this.targetSolutions = [];
+    //this.displayBoards = [];
+    this.ui = {};
+    //this.#tickers.update = this.world.app.ticker.add((delta) => this.#update(delta));
+    this.#createTargetSolutions();
+    this.#solve();
+  }
+  #createTargetSolutions() {
+    //?init
+    this.map.rows.forEach((rowValue) => {
+      this.targetSolutions.push({ index: 0, combinations: cloneDeep(this.combinations[rowValue]) });
+    });
+    //?inject Monsters
+    this.map.monstersPos.forEach((pos) => {
+      const combinations = this.targetSolutions[pos.i].combinations;
+      for (let i = 0; i < combinations.length; i++) {
+        const combination = combinations[i];
+        if (combination[pos.j] === 0) {
+          combination[pos.j] = 2;
+        } else {
+          combinations.splice(i, 1);
+          i--;
+        }
+      }
+    });
+  }
+  #solve() {
+    this.#progress++;
+    console.log("PROGRESS: ", this.#progress);
+    //?si allCombinationsDone -> return false
+    if (this.#allCombinationsDone) return false;
+    for (let j = 0; j < 8; j++) {
+      let count = 0;
+      //?evaluear la current combination el index de la row va de 0 a 7,
+      for (let i = 0; i < 8; i++) {
+        //?el index de la col es targetSolutions[index] -> si es wall -> count++
+        const index = this.targetSolutions[i].index;
+        const value = this.targetSolutions[i].combinations[index][j];
+        if (value === 1) count++;
+      }
+      //?comparar count con this.map.col[] -> si es !== 0 -> RECURSION
+      if (count - this.map.cols[j] !== 0) {
+        //?increment index en targetSolutions
+        this.#incrementIndex();
+        break;
+      } else {
+        if (j === 7) {
+          console.log("FOUND");
+          this.solutionFound = [];
+          for (let k = 0; k < 8; k++) {
+            this.solutionFound.push(this.targetSolutions[k].combinations[this.targetSolutions[k].index]);
+          }
+          console.log(this.solutionFound);
+          return true;
+        }
+      }
+    }
+    //?RECURSION
+    this.#solve();
+  }
+  #incrementIndex() {
+    for (let i = this.targetSolutions.length - 1; i >= 0; i--) {
+      if (this.targetSolutions[i].index < this.targetSolutions[i].combinations.length - 1) {
+        this.targetSolutions[i].index++;
+        break;
+      } else {
+        this.targetSolutions[i].index = 0;
+        if (i === 0) this.#allCombinationsDone = true;
+      }
+    }
+  }
+}
+export default Solver;

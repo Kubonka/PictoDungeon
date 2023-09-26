@@ -12,6 +12,7 @@ class PixiApp {
     this.assets = {};
     this.boardContainer = new PIXI.Container();
     this.boardContainer.position.set(64, 64);
+    this.solverContainers = [];
     this.app.stage.addChild(this.boardContainer);
     const container = document.getElementById("pixiContainer");
     container.appendChild(this.app.view);
@@ -43,6 +44,8 @@ class PixiApp {
     this.assets.acumulatorBg = await PIXI.Assets.load("acumulatorBg");
     PIXI.Assets.add("acumulatorFill", "./static/gems/spriteSheets/acumulator/fill.png");
     this.assets.acumulatorFill = await PIXI.Assets.load("acumulatorFill");
+    PIXI.Assets.add("cell", "./static/gems/spriteSheets/cell/cell.png");
+    this.assets.cell = await PIXI.Assets.load("cell");
   }
   #update(delta) {
     TWEEN.update();
