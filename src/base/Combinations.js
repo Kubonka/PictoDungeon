@@ -1,13 +1,36 @@
+import cloneDeep from "lodash/cloneDeep";
 class Combinations {
   constructor() {
     this.combinations = {};
     this.combinations["0"] = [[0, 0, 0, 0, 0, 0, 0, 0]];
-    for (let index = 1; index < 8; index++) {
-      this.combinations[index] = this.#generateCombination(index);
-    }
     this.combinations["8"] = [[1, 1, 1, 1, 1, 1, 1, 1]];
+    this.#generate(8);
+    // for (let index = 1; index < 8; index++) {
+    //   //this.combinations[index] = this.#generateCombination(index);
+    // }
   }
-  #generateCombination(val) {
+
+  #generate(size) {
+    const combinations = [];
+    //?todas las posibles
+    const max = Math.pow(2, size) - 1;
+    for (let i = 0; i <= max; i++) {
+      //?transformar a binstr
+      const binStr = i.toString(2).padStart(size, "0");
+      const combinationArr = binStr.split("").map((value) => Number(value));
+      combinations.push(combinationArr);
+    }
+    //?filtrar para cada val
+    for (let val = 1; val < 8; val++) {
+      const rowComb = cloneDeep(combinations);
+      const filtered = rowComb.filter((c) => {
+        return c.reduce((total, current) => total + current, 0) === val;
+      });
+      this.combinations[val] = filtered;
+    }
+  }
+
+  #generateCombination1(val) {
     let result = [];
     const base = new Array(8).fill(0);
     for (let i = 0; i < val; i++) {

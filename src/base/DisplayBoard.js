@@ -28,7 +28,7 @@ class DisplayBoard {
   #initializeBoard(adn) {
     for (let i = 0; i < adn.genes.length; i++) {
       for (let j = 0; j < adn.genes.length; j++) {
-        this.board.push(new Cell(this.world, i, j, adn.genes[i][j].value, this.container));
+        this.board.push(new Cell(this.world, i, j, adn.genes[i][j], this.container));
       }
     }
     this.text.text = this.fitness;
